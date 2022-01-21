@@ -1,9 +1,12 @@
 package com.abc.productservice.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,11 +44,25 @@ public class ProductController {
 		
 	}
 	
+	//get product by Id
+	@GetMapping("/getProduct/{id}")
+	public Optional<Product> getProductById(@PathVariable long id){
+		return productservice.getProductById(id);
+		
+	}
+	
 	//To modify product
 	@PutMapping("/modifyProduct/{id}")
-	public Product updateProductById(@RequestBody Product product,long id){
-		return productservice.updateProductById();
+	public Product updateProductById(@RequestBody Product product,@PathVariable long id){
+		return productservice.updateProductById(product,id);
 	
+		
+	}
+	//to delete product by id
+	@DeleteMapping("/deleteProduct/{id}")
+	public String deleteProductById(@PathVariable long id){
+		productservice.deleteProductById(id);
+		return "Product Deleted Succesfully!!";
 		
 	}
 	
